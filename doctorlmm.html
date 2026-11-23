@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Doctor LLM</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef5f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #0002;
+        }
+
+        h1 {
+            text-align: center;
+            color: #087e8b;
+        }
+
+        p {
+            text-align: center;
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 15px;
+            background: #087e8b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #05616b;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f7f5;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🩺 AI Doctor LLM</h1>
+
+    <p>Enter your symptoms to get general health guidance.</p>
+
+    <textarea id="symptoms"
+        placeholder="Example: I have a headache, fever and cough...">
+    </textarea>
+
+    <button onclick="checkSymptoms()">
+        Analyze Symptoms
+    </button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+function checkSymptoms() {
+
+    let symptoms = document.getElementById("symptoms")
+        .value.toLowerCase().trim();
+
+    let result = document.getElementById("result");
+
+    if (symptoms === "") {
+        alert("Please enter your symptoms!");
+        return;
+    }
+
+    let advice = "";
+
+    if (symptoms.includes("fever") &&
+        symptoms.includes("cough")) {
+
+        advice = "Your symptoms may be associated with a respiratory infection. Consider contacting a healthcare professional.";
+
+    } else if (symptoms.includes("headache")) {
+
+        advice = "Headaches can have many causes, including stress, dehydration or illness. Rest and drink water if appropriate. Seek medical advice if it persists or worsens.";
+
+    } else if (symptoms.includes("stomach")) {
+
+        advice = "Stomach discomfort can have several causes. Monitor your symptoms and consult a healthcare professional if needed.";
+
+    } else if (symptoms.includes("cold") ||
+               symptoms.includes("sneezing")) {
+
+        advice = "These symptoms may occur with a common cold or allergies. Rest and monitor your condition.";
+
+    } else {
+
+        advice = "There are several possible explanations for your symptoms. Please consult a healthcare professional for an accurate assessment.";
+    }
+
+    result.style.display = "block";
+
+    result.innerHTML = `
+        <h3>AI Doctor Response</h3>
+        <b>Your Symptoms:</b>
+        <p>${escapeHTML(symptoms)}</p>
+
+        <b>General Assessment:</b>
+        <p>${advice}</p>
+
+        <b>Recommendation:</b>
+        <p>Monitor your symptoms and seek professional medical advice.
+        This program does not provide a medical diagnosis.</p>
+    `;
+}
+
+function escapeHTML(text) {
+    return text.replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }[char];
+    });
+}
+
+</script>
+
+</body>
+</html>
